@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your call is booked | Air4Future</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0b1016" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" />
+  <style>
+    /* ===== Farben & Schriften (hier zentral anpassbar) ===== */
+    :root {
+      --paper: #0b1016;
+      --card: #121a22;
+      --card-2: #18222c;
+      --ink: #eef3f7;
+      --muted: #94a3b0;
+      --line: #1f2b36;
+      --accent: #0fa4fa;      /* Air4Future-Blau */
+      --accent-ink: #04121c;
+      --radius: 1rem;
+      --display: "Space Grotesk", system-ui, sans-serif;
+      --sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); color-scheme: dark; -webkit-font-smoothing: antialiased; }
+    body {
+      margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.6;
+      background: radial-gradient(60rem 30rem at 50% -10%, rgba(15,164,250,.14), transparent 70%), var(--paper);
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+    p { margin: 0; }
+    .wrap { max-width: 56rem; margin: 0 auto; padding: 0 1.25rem; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
+
+    /* Header */
+    header { border-bottom: 1px solid var(--line); }
+    header .wrap { display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem; }
+    .logo { font-family: var(--display); font-weight: 600; font-size: 1.05rem; text-decoration: none; }
+    .logo span { color: var(--accent); }
+
+    /* Intro */
+    .intro { text-align: center; padding: 3rem 0 2rem; }
+    .intro h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.15; font-weight: 600; }
+    .intro p { margin-top: 0.75rem; }
+
+    /* Schritte */
+    .step { border-top: 1px solid var(--line); padding: 3rem 0; }
+    .step-head { display: flex; align-items: flex-start; gap: 1rem; }
+    .step-num { font-family: var(--display); font-size: 2.4rem; line-height: 1; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .step-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    .step-head h2 { font-size: clamp(1.4rem, 3.5vw, 1.8rem); font-weight: 600; line-height: 1.2; margin-top: 0.2rem; }
+    .step-text { margin-top: 1.25rem; max-width: 40rem; }
+    .step-body { margin-top: 1.5rem; }
+
+    /* Video-Slots */
+    .video-slot { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+    .video-slot.vertical { aspect-ratio: 9/16; }
+    .video-slot iframe, .video-slot video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+    .video-placeholder { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 0.5rem; padding: 1rem; color: var(--muted); font-size: 0.85rem; background: center/cover no-repeat; }
+    .video-placeholder::before { content: ""; position: absolute; inset: 0; background: rgba(11,16,22,.6); }
+    .video-placeholder > * { position: relative; }
+    .play { width: 3.75rem; height: 3.75rem; margin: 0 auto; border-radius: 999px; background: var(--accent); display: grid; place-items: center; box-shadow: 0 0 0 10px rgba(15,164,250,.2); }
+    .play::after { content: ""; margin-left: 4px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent var(--accent-ink); }
+
+    /* Kalender-Karte */
+    .invite { background: #f5f7f9; color: #0b1016; border-radius: var(--radius); padding: 1.25rem; }
+    .invite-top { display: flex; gap: 1rem; align-items: center; }
+    .invite-date { flex: none; width: 3.5rem; text-align: center; border-radius: 0.6rem; overflow: hidden; border: 1px solid #dde3e8; background: #fff; }
+    .invite-date b { display: block; background: var(--accent); color: #fff; font-size: 0.65rem; letter-spacing: .08em; padding: 0.15rem 0; }
+    .invite-date span { display: block; font-family: var(--display); font-size: 1.35rem; font-weight: 600; padding: 0.2rem 0; }
+    .invite h3 { font-size: 1.05rem; font-family: var(--sans); font-weight: 700; letter-spacing: 0; }
+    .invite small { color: #5b6872; }
+    .invite-actions { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .pill { border: 1px solid #d3dbe1; border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 0.85rem; font-weight: 600; background: #fff; }
+    .pill.yes { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .pill.add { margin-left: auto; }
+    .tips { margin-top: 1rem; display: grid; gap: 0.6rem; list-style: none; padding: 0; }
+    .tips li { display: flex; gap: 0.75rem; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: 0.75rem; padding: 0.8rem 1rem; font-size: 0.92rem; color: var(--muted); }
+    .tips li::before { content: "→"; color: var(--accent); font-weight: 700; }
+    .tips strong { color: var(--ink); }
+
+    /* Bonus / Ergebnisse */
+    .bonus-badge { width: 2.6rem; height: 2.6rem; flex: none; display: grid; place-items: center; border-radius: 0.75rem; background: var(--card-2); border: 1px solid var(--line); color: var(--accent); font-size: 1.2rem; }
+    .grid-2 { display: grid; gap: 1rem; }
+    .quote { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1.25rem; }
+    .quote blockquote { margin: 0; font-size: 0.98rem; line-height: 1.6; }
+    .quote figcaption { display: flex; align-items: center; gap: 0.65rem; font-weight: 700; font-size: 0.92rem; }
+    .quote .avatar { width: 2.1rem; height: 2.1rem; border-radius: 999px; background: var(--card-2); border: 1px solid var(--line); color: var(--accent); display: grid; place-items: center; font-family: var(--display); }
+    .quote-wide { margin-top: 1rem; border-color: rgba(15,164,250,.35); }
+    .proof-slot { border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px dashed #2c3b48; min-height: 14rem; display: grid; place-content: center; text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.9rem; }
+    .proof-slot img { width: 100%; height: 100%; object-fit: cover; }
+    .proof-slot.filled { border-style: solid; padding: 0; display: block; }
+
+    /* Fragen */
+    .faq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem; }
+    .faq-item p { margin: 0.5rem 0 0; }
+    .faq-item h3 { margin-top: 0; font-family: var(--sans); font-size: 1rem; font-weight: 700; letter-spacing: 0; line-height: 1.4; }
+
+    /* Abschluss */
+    .final { border-top: 1px solid var(--line); padding: 3rem 0 4rem; text-align: center; }
+    .final h2 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; }
+    .final p { margin-top: 0.75rem; }
+    footer { border-top: 1px solid var(--line); }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.5rem; padding-bottom: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+
+    @media (min-width: 720px) {
+      .intro { padding: 4.5rem 0 3rem; }
+      .step { padding: 4rem 0; }
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .step-num { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap"><a href="#" class="logo">Air<span>4</span>Future</a></div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ===== INTRO ===== -->
+    <section class="intro">
+      <h1>Your call is <span class="accent">booked</span>.<br />Here is what you should know before we talk:</h1>
+      <p class="muted">Takes about 10 minutes. It makes our call a lot more useful for you.</p>
+    </section>
+
+    <!-- =====================================================================
+         VIDEO-SLOTS
+         Auf dieser Seite gibt es 1 Video-Slot: VIDEO-SLOT 1 (Schritt 1).
+         So tauschst du ein Video ein:
+           1. Suche den Slot (z. B. "VIDEO-SLOT 1").
+           2. Lösche darin den Block <div class="video-placeholder">…</div>.
+           3. Füge an derselben Stelle EINE dieser Varianten ein:
+
+           A) YouTube  (VIDEO_ID = der Teil nach "watch?v=" im Link)
+              <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+           B) Vimeo    (VIDEO_ID = die Zahl am Ende des Vimeo-Links)
+              <iframe src="https://player.vimeo.com/video/VIDEO_ID" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+
+           C) Eigene MP4-Datei  (Datei in den Ordner assets/videos/ legen)
+              <video src="assets/videos/DATEINAME.mp4" controls playsinline preload="metadata"></video>
+
+         Hochformat-Video? Dann class="video-slot vertical" schreiben.
+         ===================================================================== -->
+
+    <!-- ===== SCHRITT 1 ===== -->
+    <section class="step">
+      <div class="step-head">
+        <span class="step-num">01</span>
+        <div>
+          <p class="step-label">Step 1 of 3</p>
+          <h2>How working with me looks</h2>
+        </div>
+      </div>
+      <p class="step-text muted">Watch this before the call. You'll see how I work, what we focus on and what you can expect. Then we can spend the call on you and your footage.</p>
+      <div class="step-body">
+        <!-- ===== VIDEO-SLOT 1 (Hauptvideo) ===== -->
+        <div class="video-slot">
+          <iframe src="https://www.youtube-nocookie.com/embed/kJc_Llpojfk?rel=0" title="How working with me looks" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <!-- ===== ENDE VIDEO-SLOT 1 ===== -->
+      </div>
+      <p class="step-text muted">If the time doesn't work for you anymore, just send me a quick message. Then someone else gets the slot and we find a new time. Below I've answered the most common questions, so we can spend our call fully on you, your footage and your page.</p>
+    </section>
+
+    <!-- ===== SCHRITT 2 ===== -->
+    <section class="step">
+      <div class="step-head">
+        <span class="step-num">02</span>
+        <div>
+          <p class="step-label">Step 2 of 3</p>
+          <h2>Accept the calendar invite</h2>
+        </div>
+      </div>
+      <p class="step-text muted">If you don't accept the invite, your calendar won't remind you. That's the most common reason a call gets missed.</p>
+      <div class="step-body">
+        <div class="invite" aria-hidden="true">
+          <div class="invite-top">
+            <div class="invite-date"><b>CALL</b><span>✓</span></div>
+            <div>
+              <h3>Strategy call with Fabian</h3>
+              <small>Video call · Fabian (Air4Future), organizer</small>
+            </div>
+          </div>
+          <div class="invite-actions">
+            <span class="pill yes">Yes</span>
+            <span class="pill">No</span>
+            <span class="pill">Maybe</span>
+            <span class="pill add">Add to calendar</span>
+          </div>
+        </div>
+        <ul class="tips">
+          <!-- Absendername der Einladung ggf. anpassen -->
+          <li><span>Search your inbox for <strong>"Fabian"</strong> or <strong>"Air4Future"</strong>. Check your spam folder too.</span></li>
+          <li><span>Click <strong>"Add to calendar"</strong> and answer <strong>"Yes"</strong> to the invite.</span></li>
+          <li><span>Join from a laptop if you can, in a quiet place. Have a few of your clips ready to show me.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== BONUS: ERGEBNISSE =====
+         Zitate aus den Testimonial-Videos (Rippio-tmp/testimonials) und einer Nachricht von Ben.
+         Nur Vornamen. Zitat ändern: einfach den Text im <blockquote> austauschen. -->
+    <section class="step">
+      <div class="step-head">
+        <span class="bonus-badge">★</span>
+        <div>
+          <p class="step-label">Bonus</p>
+          <h2>What other pilots say</h2>
+        </div>
+      </div>
+      <div class="step-body grid-2">
+        <figure class="quote">
+          <blockquote>“I knew how to fly a drone but my footage didn't look cinematic at all. In just 90 days I went from this to clean cinematic drone shots that I'm really proud of. Everything was structured, easy to follow and directly applicable.”</blockquote>
+          <figcaption><span class="avatar">J</span>Jakov</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“I knew how to fly, but my footage never looked cinematic. The step-by-step roadmap changed everything, from smooth movement to actually understanding how to tell a story with my shots.”</blockquote>
+          <figcaption><span class="avatar">B</span>Bryan</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“Before joining, I had no real clue how to edit my photos properly. I was just guessing. I learned how to actually color grade, got real feedback from Fabian and other members. My photos went from random edits to clean intentional looks.”</blockquote>
+          <figcaption><span class="avatar">T</span>Tim</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“I wanted to improve my shots, to make them feel more cinematic, smoother and natural. I wanted to better understand color grading and editing, and I was finally able to do so.”</blockquote>
+          <figcaption><span class="avatar">F</span>Francesco, Italy</figcaption>
+        </figure>
+      </div>
+      <figure class="quote quote-wide">
+        <blockquote>“I was thinking about joining for too long. I wasn't really sure, but it was the best decision regarding my drone journey.”</blockquote>
+        <figcaption><span class="avatar">B</span>Ben</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== SCHRITT 3: FRAGEN ===== -->
+    <section class="step">
+      <div class="step-head">
+        <span class="step-num">03</span>
+        <div>
+          <p class="step-label">Step 3 of 3</p>
+          <h2>Let's clear up your questions</h2>
+        </div>
+      </div>
+      <p class="step-text muted">So we can spend the call fully on your footage and your goals.</p>
+      <div class="step-body grid-2">
+        <div class="faq-item">
+          <h3>"I can learn all of this for free on YouTube."</h3>
+          <p class="muted">You can find a lot of single tips for free. What's missing is the structure behind them and honest feedback on your own footage. That's what we work on together.</p>
+        </div>
+        <div class="faq-item">
+          <h3>"I don't have time to fly every week."</h3>
+          <p class="muted">You don't need to fly more. You need to plan better. A few well planned flights give you more usable footage than many random ones.</p>
+        </div>
+        <div class="faq-item">
+          <h3>"I want to see proof that this works."</h3>
+          <p class="muted">Fair. On the call I'll show you my own path, from barely any views to 100K+ followers and brand deals, and what changed along the way.</p>
+        </div>
+        <div class="faq-item">
+          <h3>"How does the investment work?"</h3>
+          <p class="muted">We'll talk about that at the end of the call, once we both know if working together makes sense for you. No pressure either way.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABSCHLUSS ===== -->
+    <section class="final">
+      <h2>See you on the call.</h2>
+      <p class="muted">Bring your questions and a few of your clips. We'll look at where you are and what's missing.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <script>document.write(new Date().getFullYear())</script> Air4Future</span>
+      <a href="https://www.instagram.com/air4future/">Instagram</a>
+    </div>
+  </footer>
+
+</body>
+</html>
